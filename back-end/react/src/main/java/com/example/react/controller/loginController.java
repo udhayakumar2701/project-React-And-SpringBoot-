@@ -1,12 +1,21 @@
 package com.example.react.controller;
 
-import com.example.react.Dto.loginDto;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.react.Dto.loginDto;
+
+/**
+ * @author udhayakumar
+ */
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
@@ -15,13 +24,18 @@ public class loginController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<loginDto> loginData(@RequestBody loginDto obj) {
+    public ResponseEntity<?> loginData(@RequestBody loginDto obj) {
         System.out.println(obj.toString());
-      List<loginDto> object=new ArrayList<>();
-      object.add(new loginDto());
+      if(!obj.getEmail().equals("") && !obj.getPassword().equals("")){
+          List<loginDto> object=new ArrayList<>();
+          object.add(obj);
         // Simulate a successful response with HTTP 200 OK
         // In a real-world scenario, you might perform authentication and return appropriate status codes.
-        return ResponseEntity.ok(obj);
+        return ResponseEntity.ok(obj);}
+      else{
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Is Worng");
+      }
+
     }
 
 }
