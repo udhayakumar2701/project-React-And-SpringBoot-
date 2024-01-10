@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.react.Dto.loginDto;
+import com.example.react.Dto.registerDto;
 
 /**
  * @author udhayakumar
@@ -37,5 +38,18 @@ public class loginController {
       }
 
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerData(@RequestBody registerDto obj) {
+        System.out.println(obj.toString());
+        if(obj.getPassword().equals(obj.getConfirmPassword())){
+            return ResponseEntity.ok(obj);}
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password doesn't match");
+        }
+
+
+    }
+
 
 }
