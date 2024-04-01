@@ -47,8 +47,6 @@ public class loginController {
         else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password doesn't match");
         }
-
-
     }
 
 
